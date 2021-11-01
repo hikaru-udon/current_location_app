@@ -1,27 +1,19 @@
 class SearchController < ApplicationController
-  require 'net/http'
-
+  
   def index
-    # puts '---------'
-    # puts params[:shop_name]
+    require 'net/http'
+
     if shop_name = params[:shop_name]
       params = URI.encode_www_form({name: shop_name})
-      uri = URI.encode("http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=261324dd569a9418&name=#{shop_name}")
-      puts "-------"
-      puts params
-      puts "-------"
+      uri = URI.encode("https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=261324dd569a9418&name=#{shop_name}&count=10&format=json")
       uri = URI.parse(uri)
       response = Net::HTTP.get_response(uri)
-      #xml形式で受け取っているので、json形式に変化する
-      json = response.to_json
-      result = JSON.parse(json)
-      puts "-------"
-      puts result
-      puts "-------"
-      if result["results"]
-        @shop_name = result["results"][0]["name"]
-      end
+      #Jsonデータを解析し、Rubyで取り出すためにHash形式に変換
+      hash = JSON.parse(response.body)
+      @shops = hash["results"]["shop"]
+      # binding.pry
     end
+
   end
 
   def search
