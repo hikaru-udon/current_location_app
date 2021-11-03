@@ -1,12 +1,13 @@
-<p>
-  店名：<%= @shop_name %>
-</p>
-<p>
-  画像：<%= @shop_name %>
-</p>
-<p>
-  アクセス：<%= @shop_name %>
-</p>
-<p>
-  営業時間：<%= @shop_name %>
-</p>
+<div>
+  <% if @shops.present? %>
+    <% @shops.each do |shop| %>
+      <p>
+      店舗名：<%= shop["name"] %>
+      </p>
+    <% end %>
+  <% elsif @shops.nil? %>
+    店舗名を入力してください。
+  <% else %>
+    該当する店舗情報はありませんでした。
+  <% end %>
+</div>
