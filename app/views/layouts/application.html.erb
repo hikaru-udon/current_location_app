@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>CurrentLocationApp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script>
+      function current_position() {
+        navigator.geolocation.getCurrentPosition(success, fail);
+      };
+      function success(position){
+        const lat = position.coords.latitude;  // 緯度を取得して定数latに代入
+        const lng = position.coords.longitude;  // 経度を取得して定数lngに代入　
+        const accuracy = position.coords.accuracy;  // 精度を定数accuracyに代入
+        // alert(lat)
+      };
+      function fail(position){
+        alert('位置情報の取得に失敗しました。エラーコード：');
+      };
+
+      $(function locate() {
+        var current_position = localStorage.getItem('current_position');
+        localStorage.clear();
+        // localStorageを用いて他のファイルの変数を持ってきてcurrent_locationへ代入しています。
+        $.ajax({
+          url: '/search/index',  // 渡したい先のパス
+          type: 'GET',
+          dataType: 'html',
+          async: true,
+          data: {
+            location: current_location, // 「キー：値」の形で記述し、このキーをrailsのコントローラーに渡す
+          },
+        });
+      });
+    </script>
   </head>
 
   <body>
+    <button onclick="locate()">現在地から探す</button>
     <%= form_with url: root_path, method: :get, local: true do |f| %>
       <%= f.text_field :shop_name, class: "search_form", placeholder: "店名を入力してください" %>
     <% end %>

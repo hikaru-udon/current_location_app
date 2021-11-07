@@ -3,6 +3,8 @@ class SearchController < ApplicationController
   def index
     require 'net/http'
 
+    @location = params[:location]
+
     if shop_name = params[:shop_name] 
       params = URI.encode_www_form({name: shop_name})
       encode_uri = URI.encode("https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=261324dd569a9418&name=#{shop_name}&count=100&format=json")

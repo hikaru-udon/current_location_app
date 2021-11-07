@@ -57,3 +57,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+#JS受け取った現在地情報を変数としてrailsに渡して処理する目的で使用
+gem 'jquery-rails'
+gem 'jquery-turbolinks'
