@@ -21,11 +21,11 @@
         alert('位置情報の取得に失敗しました。エラーコード：');
       };
 
-      function locate() {
+      $(function locate() {
         var current_position = localStorage.getItem('current_position');
         localStorage.clear();
         // localStorageを用いて他のファイルの変数を持ってきてcurrent_locationへ代入しています。
-        ajax({
+        $.ajax({
           url: '/search/index',  // 渡したい先のパス
           type: 'GET',
           dataType: 'html',
@@ -34,7 +34,7 @@
             location: current_location, // 「キー：値」の形で記述し、このキーをrailsのコントローラーに渡す
           },
         });
-      };
+      });
     </script>
   </head>
 
